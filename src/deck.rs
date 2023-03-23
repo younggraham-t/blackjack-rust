@@ -23,11 +23,6 @@ impl Deck {
 
     fn create_cards_vector() -> Vec<Card> {
         
-        // let card_values = vec![
-        //     "Two", "Three", "Four", "Five",
-        //     "Six", "Seven", "Eight", "Nine", "Ten",
-        //     "Jack", "Queen", "King", "Ace"];
-        // let card_suits = vec!["Hearts", "Clubs", "Diamonds", "Spades"];
 
         let mut cards: Vec<Card> = Vec::new();
         for value in Value::iter() {
