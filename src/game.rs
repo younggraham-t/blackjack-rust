@@ -45,17 +45,20 @@ impl Dealer {
         // let dp: Binop = self.dealer_plays();
         user_options.insert("stand", Dealer::dealer_plays);
         user_options.insert("hit", Dealer::player_hit);
-
-
-        println!("Delear hand: {}", self.dealer);
+        
+        let dealer_start_total = self.dealer.get_hand_total();
+        println!("Delear hand: \t{}\nDealer total: \t{}", self.dealer, dealer_start_total);
         loop {
             let player_current_total = self.player.get_hand_total();
-            println!("Player hand: {} Hand Total: {}", self.player, player_current_total);
+            println!("Player hand: \t{}\nPlayer total: \t{}", self.player, player_current_total);
             let mut player_input = String::new();
-            println!("Do you wish to 'hit' or 'stand'?");
+            println!("Do you wish to 'hit' or 'stand'?  Type 'q' to quit.");
             stdin().read_line(&mut player_input).expect("yes");
             player_input = player_input.trim().to_lowercase();
             // println!("{}", player_input);
+            if player_input.as_str() == "q" {
+                return;
+            }
             match user_options.get(&player_input.as_str()) {
                 Some(func) => {let end = func(self);
                             if end {
@@ -69,8 +72,9 @@ impl Dealer {
                 None => println!("Enter either 'hit' or 'stand'."),
             }
         }
+        
         if self.player.is_busted() {
-            println!("Dealer Wins");
+            println!("Dealer wins");
             
         } else if self.dealer.is_busted() {
             println!("You win");
@@ -79,7 +83,7 @@ impl Dealer {
             if win {
                 println!("You win");
             } else {
-                println!("Dealer Wins");
+                println!("Dealer wins");
             }
         }
 
@@ -87,7 +91,7 @@ impl Dealer {
 
     fn draw_card_to_hand(deck:&mut Deck, player_hand:&mut PlayerHand) {
         let drawn_card = deck.draw_card();
-        println!("Card Drawn: {:?}", drawn_card);
+        println!("Card drawn: \t{}", drawn_card.name.as_str());
         player_hand.add_card_to_hand(drawn_card);
 
     }
@@ -101,8 +105,9 @@ impl Dealer {
     fn dealer_plays(&mut self) -> bool {
         // dealer draws until he has a score of 17 or more
         loop {
+            println!("Dealer hand: \t{}", self.dealer.get_hand_total());
             if self.dealer.get_hand_total() >= 17 {
-                return false;
+                return true;
             }
             Self::draw_card_to_hand(&mut self.deck, &mut self.dealer);
         }
