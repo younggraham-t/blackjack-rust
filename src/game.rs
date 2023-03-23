@@ -49,7 +49,8 @@ impl Dealer {
 
         println!("Delear hand: {}", self.dealer);
         loop {
-            println!("Player hand: {}", self.player);
+            let player_current_total = self.player.get_hand_total();
+            println!("Player hand: {} Hand Total: {}", self.player, player_current_total);
             let mut player_input = String::new();
             println!("Do you wish to 'hit' or 'stand'?");
             stdin().read_line(&mut player_input).expect("yes");
