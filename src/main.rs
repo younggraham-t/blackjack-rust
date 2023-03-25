@@ -121,7 +121,12 @@ fn app() -> Html {
 
     html! {
         html! {
-            <CardList cards={cards} on_click={on_card_select.clone()}/>
+            <>
+                <div>
+                    <CardList cards={cards} on_click={on_card_select.clone()}/>
+                </div>
+                { for details }
+            </>
         }
     }
 }
