@@ -2,47 +2,62 @@ mod deck;
 mod card;
 mod game;
 mod player;
-
+// // mod graphics;
+//
 // use crate::deck::Deck;
 use card::Card;
 use game::Dealer;
 // use std::collections::HashMap;
 // use std::io::stdin;
+// //
 //
+// fn main() {
+//     let mut dealer = Dealer::new();
+//
+//     dealer.run();
+// }
 
-fn main() {
-    let mut dealer = Dealer::new();
+use yew::prelude::*;
 
-    dealer.run();
+// #[function_component]
+// fn App() -> Html {
+//     let counter = use_state(|| 0);
+//     let onclick = {
+//         let counter = counter.clone();
+//         move |_| {
+//             let value = *counter + 1;
+//             counter.set(value);
+//         }
+//     };
+//
+//     html! {
+//         <div>
+//             <button {onclick}>{ "+1" }</button>
+//             <p>{ *counter }</p>
+//         </div>
+//     }
+// }
+
+#[function_component(App)]
+fn app() -> Html {
+html! {
+    <>
+        <h1>{ "RustConf Explorer" }</h1>
+        <div>
+            <h3>{"Videos to watch"}</h3>
+            <p>{ "John Doe: Building and breaking things" }</p>
+            <p>{ "Jane Smith: The development process" }</p>
+            <p>{ "Matt Miller: The Web 7.0" }</p>
+            <p>{ "Tom Jerry: Mouseless development" }</p>
+        </div>
+        <div>
+            <h3>{ "John Doe: Building and breaking things" }</h3>
+            <img src="https://via.placeholder.com/640x360.png?text=Video+Player+Placeholder" alt="video thumbnail" />
+        </div>
+    </>
+}
 }
 
-//
-// fn run(dealer: Dealer) {
-//     dealer.deal_cards();
-//     let mut user_options: HashMap<String, fn(&Dealer)> = HashMap::new();
-//     // type Binop = fn();
-//     // let dp: Binop = Dealer::dealer_plays();
-//     user_options.insert("stand".to_string(), dealer_plays(&dealer));
-//
-//
-//     loop {
-//         let mut player_input = String::new();
-//         println!("Do you wish to 'hit' or 'stand'?");
-//         stdin().read_line(&mut player_input).expect("yes");
-//         player_input = player_input.to_lowercase();
-//         match player_input.as_str() {
-//             "stand" => {println!("stand");
-//                 /*end loop and draw cards for the dealer*/ 
-//                 break;},
-//
-//             "hit" => /*draw a card*/ println!("hit"),
-//
-//             _ => println!("Enter either 'hit' or 'stand'."),
-//         }
-//     }
-//
-// }
-//
-// fn dealer_plays(dealer: &Dealer) {
-//
-// }
+fn main() {
+    yew::Renderer::<App>::new().render();
+}
