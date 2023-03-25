@@ -15,12 +15,12 @@ pub struct Dealer {
 
 
 impl Dealer {
-    pub fn new() -> Self {
+    pub fn new(deck: Deck) -> Self {
 
         Self {
-    deck: Deck::new(),
-          player: PlayerHand::new(),
-          dealer: PlayerHand::new(),
+            deck,
+            player: PlayerHand::new(),
+            dealer: PlayerHand::new(),
         } 
         
     }

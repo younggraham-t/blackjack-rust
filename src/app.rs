@@ -12,43 +12,26 @@ use gloo_console::log;
 use wasm_bindgen::JsValue;
 use strum::IntoEnumIterator; // 0.17.1
 
-#[derive(Properties, PartialEq)]
-struct CardListProps {
-    cards: Vec<Card>,
-    on_click: Callback<Card>
+// #[derive(Properties, PartialEq)]
+// struct CardListProps {
+//     cards: Vec<Card>,
+//     on_click: Callback<Card>
+//
+// }
 
-}
-
-fn create_cards_vector() -> Vec<Card> {
-    let mut cards: Vec<Card> = Vec::new();
-    let mut card_id: u32 = 1;
-    for value in Value::iter() {
-        for suit in Suit::iter() {
-            cards.push(Card{
-                id: card_id,
-                value,
-                suit,
-                name: format!("{} of {}", value, suit)});
-            card_id += 1;
-        }
-    }
-    cards.shuffle(&mut thread_rng());
-    cards
-}
-
-impl CardListProps {
-
-    pub fn draw_card(&mut self) -> Card {
-        //restock the pile if its empty
-        if self.cards.is_empty() {
-            self.cards = create_cards_vector();
-        }
-        //take the card off the pile
-        self.cards.pop().expect("yes")
-        
-    }
-
-}
+// impl CardListProps {
+//
+//     pub fn draw_card(&mut self) -> Card {
+//         //restock the pile if its empty
+//         if self.cards.is_empty() {
+//             self.cards = Deck::create_cards_vector();
+//         }
+//         //take the card off the pile
+//         self.cards.pop().expect("yes")
+//         
+//     }
+//
+// }
 
 #[derive(Properties, PartialEq)]
 struct CardDetailsProps {
@@ -66,7 +49,7 @@ fn card_details(CardDetailsProps { card }: &CardDetailsProps) -> Html {
 }
 
 #[function_component(CardList)]
-fn deck(CardListProps { cards, on_click }: &CardListProps) -> Html {
+fn deck(Deck { cards, on_click }: &Deck) -> Html {
     let on_click = on_click.clone();
     cards.iter().map(|card| {
         let on_card_select = {
@@ -98,9 +81,9 @@ fn app() -> Html {
         <CardDetails card={card.clone()} />
     });
 
-    let deck = Deck::new();
+    // let deck = Deck::new();
     // let DeckHtml = deck(deck);
-    let cards = create_cards_vector();
+    let cards = Deck::create_cards_vector();
 
     html! {
         html! {

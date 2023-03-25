@@ -10,19 +10,20 @@ use yew::prelude::*;
 #[derive(Properties, PartialEq)]
 pub struct Deck {
     pub cards: Vec<Card>,
+    pub on_click: Callback<Card>
 }
 
 impl Deck {
-    pub fn new() -> Self {
-        let new_cards = Self::create_cards_vector();
+    // pub fn new() -> Self {
+    //     let new_cards = Self::create_cards_vector();
+    //
+    //     Self { 
+    //        cards: new_cards,
+    //     }
 
-        Self { 
-           cards: new_cards,
-        }
+//  }
 
-}
-
-    fn create_cards_vector() -> Vec<Card> {
+    pub fn create_cards_vector() -> Vec<Card> {
         
 
         let mut cards: Vec<Card> = Vec::new();
