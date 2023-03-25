@@ -76,7 +76,7 @@ fn card_details(CardDetailsProps { card }: &CardDetailsProps) -> Html {
     html! {
         <div>
             <h3>{ card.name.clone() }</h3>
-            <img src="/assets/3S.png" alt="card" />
+            <img src="assets/3S.png" alt="card" />
         </div>
     }
 }
