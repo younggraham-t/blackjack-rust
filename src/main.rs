@@ -7,7 +7,7 @@ mod app;
 
 use card::Card;
 use game::Dealer;
-use deck::Deck;
+use deck::*;
 
 
 // fn main() {

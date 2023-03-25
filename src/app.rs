@@ -2,7 +2,7 @@ use yew::prelude::*;
 
 use crate::Card;
 use crate::Dealer;
-use crate::Deck;
+use crate::deck::*;
 
 use rand::thread_rng;
 use rand::seq::SliceRandom;
@@ -48,22 +48,24 @@ fn card_details(CardDetailsProps { card }: &CardDetailsProps) -> Html {
     }
 }
 
-#[function_component(CardList)]
-fn deck(Deck { cards, on_click }: &Deck) -> Html {
-    let on_click = on_click.clone();
-    cards.iter().map(|card| {
-        let on_card_select = {
-            let on_click = on_click.clone();
-            let card = card.clone();
-            Callback::from(move |_| {
-                on_click.emit(card.clone())
-            })
-        };
-        html! {
-            <p key={card.id} onclick={on_card_select}>{format!("{} {}", card.value, card.suit)}</p>
-        }
-    }).collect()
-}
+// #[function_component(CardList)]
+// fn deck(Deck { cards, on_click }: &Deck) -> Html {
+//     let on_click = on_click.clone();
+//     cards.iter().map(|card| {
+//         let on_card_select = {
+//             let on_click = on_click.clone();
+//             let card = card.clone();
+//             Callback::from(move |_| {
+//                 on_click.emit(card.clone())
+//             })
+//         };
+//         html! {
+//             <p key={card.id} onclick={on_card_select}>{format!("{} {}", card.value, card.suit)}</p>
+//         }
+//     }).collect()
+// }
+
+
 #[function_component(App)]
 fn app() -> Html {
     let selected_card = use_state(|| None);
@@ -83,13 +85,13 @@ fn app() -> Html {
 
     // let deck = Deck::new();
     // let DeckHtml = deck(deck);
-    let cards = Deck::create_cards_vector();
+    let cards = DeckProps::create_cards_vector();
 
     html! {
         html! {
             <>
                 <div>
-                    <CardList cards={cards} on_click={on_card_select.clone()}/>
+                    <Deck cards={cards} on_click={on_card_select.clone()}/>
                 </div>
                 { for details }
             </>

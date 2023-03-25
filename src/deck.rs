@@ -7,13 +7,30 @@ use strum::IntoEnumIterator; // 0.17.1
 // use strum_macros::EnumIter; // 0.17.1
 use yew::prelude::*;
 
+#[function_component(Deck)]
+pub fn deck(DeckProps { cards, on_click }: &DeckProps) -> Html {
+    let on_click = on_click.clone();
+    cards.iter().map(|card| {
+        let on_card_select = {
+            let on_click = on_click.clone();
+            let card = card.clone();
+            Callback::from(move |_| {
+                on_click.emit(card.clone())
+            })
+        };
+        html! {
+            <p key={card.id} onclick={on_card_select}>{format!("{} {}", card.value, card.suit)}</p>
+        }
+    }).collect()
+}
+
 #[derive(Properties, PartialEq)]
-pub struct Deck {
+pub struct DeckProps {
     pub cards: Vec<Card>,
     pub on_click: Callback<Card>
 }
 
-impl Deck {
+impl DeckProps {
     // pub fn new() -> Self {
     //     let new_cards = Self::create_cards_vector();
     //

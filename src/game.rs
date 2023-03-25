@@ -1,5 +1,5 @@
 use super::player::PlayerHand;
-use crate::deck::Deck;
+use crate::deck::DeckProps;
 use crate::Card;
 use std::io::stdin;
 use std::collections::HashMap;
@@ -8,14 +8,14 @@ const NUMBER_OF_INITIAL_CARDS: i32 = 2;
 // const BLACKJACK: i32 = 21;
 
 pub struct Dealer {
-    deck: Deck,
+    deck: DeckProps,
     player: PlayerHand,
     dealer: PlayerHand,
 }
 
 
 impl Dealer {
-    pub fn new(deck: Deck) -> Self {
+    pub fn new(deck: DeckProps) -> Self {
 
         Self {
             deck,
@@ -89,7 +89,7 @@ impl Dealer {
 
     }
 
-    fn draw_card_to_hand(deck:&mut Deck, player_hand:&mut PlayerHand) {
+    fn draw_card_to_hand(deck:&mut DeckProps, player_hand:&mut PlayerHand) {
         let drawn_card = deck.draw_card();
         println!("Card drawn: \t{}", drawn_card.name.as_str());
         player_hand.add_card_to_hand(drawn_card);
