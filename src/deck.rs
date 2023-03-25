@@ -5,10 +5,11 @@ use crate::card::Value;
 use crate::card::Suit;
 use strum::IntoEnumIterator; // 0.17.1
 // use strum_macros::EnumIter; // 0.17.1
+use yew::prelude::*;
 
-
+#[derive(Properties, PartialEq)]
 pub struct Deck {
-    cards: Vec<Card>,
+    pub cards: Vec<Card>,
 }
 
 impl Deck {
@@ -19,18 +20,21 @@ impl Deck {
            cards: new_cards,
         }
 
-    }
+}
 
     fn create_cards_vector() -> Vec<Card> {
         
 
         let mut cards: Vec<Card> = Vec::new();
+        let mut card_id: u32 = 1;
         for value in Value::iter() {
             for suit in Suit::iter() {
                 cards.push(Card{
+                    id: card_id,
                     value,
                     suit,
-                    name: format!("{} of {}", value, suit)})
+                    name: format!("{} of {}", value, suit)});
+                card_id += 1;
             }
         }
         cards.shuffle(&mut thread_rng());

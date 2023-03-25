@@ -25,7 +25,7 @@ impl fmt::Display for Value {
 }
 
 
-#[derive(Debug, EnumIter, Copy, Clone)]
+#[derive(Debug, EnumIter, Copy, Clone, PartialEq)]
 pub enum Suit {
     Diamonds, Hearts, Clubs, Spades,
 }
@@ -36,8 +36,10 @@ impl fmt::Display for Suit {
     }
 }
 
-#[derive(Debug)]
+
+#[derive(Clone, Debug, PartialEq)]
 pub struct Card {
+    pub id: u32,
     pub value: Value,
     pub suit: Suit,
     pub name: String,
