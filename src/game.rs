@@ -1,6 +1,6 @@
 use super::player::PlayerHand;
 use crate::deck::DeckProps;
-use crate::Card;
+use crate::card::*;
 use std::io::stdin;
 use std::collections::HashMap;
 

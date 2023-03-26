@@ -1,8 +1,6 @@
-use crate::Card;
+use crate::card::*;
 use rand::thread_rng;
 use rand::seq::SliceRandom;
-use crate::card::Value;
-use crate::card::Suit;
 use strum::IntoEnumIterator; // 0.17.1
 // use strum_macros::EnumIter; // 0.17.1
 use yew::prelude::*;

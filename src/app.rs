@@ -4,11 +4,8 @@ use crate::card::*;
 use crate::game::*;
 use crate::deck::*;
 
-use rand::thread_rng;
-use rand::seq::SliceRandom;
 use gloo_console::log;
 use wasm_bindgen::JsValue;
-use strum::IntoEnumIterator; // 0.17.1
 
 
 
@@ -42,7 +39,7 @@ fn app() -> Html {
                 </div>
                 { for details }
 
-                <img src="assets/cards/AC.png" alt="card" width="100"/>
+                // <img src="assets/cards/AC.png" alt="card" width="100"/>
 
             </>
         }

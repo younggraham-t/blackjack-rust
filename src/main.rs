@@ -1,13 +1,10 @@
-#![allow(unused_imports)]
+// #![allow(unused_imports, dead_code)]
 mod deck;
 mod card;
 mod game;
 mod player;
 mod app;
 
-use card::Card;
-use game::Dealer;
-use deck::*;
 
 
 // fn main() {
