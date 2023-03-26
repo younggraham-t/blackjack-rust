@@ -2,6 +2,8 @@ use strum_macros::EnumIter; // 0.17.1
 use std::fmt;
 use yew::prelude::*;
 use crate::card::*;
+use stylist::css;
+use stylist::yew::*;
 
 #[derive(Debug, EnumIter, Copy, Clone, PartialEq)]
 pub enum Value {
@@ -43,14 +45,20 @@ impl fmt::Display for Suit {
 #[derive(Properties, PartialEq, Clone)]
 pub struct CardDetailsProps {
     pub card: Card,
+    pub on_click: Callback<MouseEvent>
 }
 
-#[function_component(CardDetails)]
-pub fn card_details(CardDetailsProps { card }: &CardDetailsProps) -> Html {
+#[styled_component(CardDetails)]
+pub fn card_details(CardDetailsProps { card, on_click }: &CardDetailsProps) -> Html {
     html! {
-        <div>
-            <h3>{ card.name.clone() }</h3>
-            <img src={card.get_image_name()} alt="card" width={CARD_WIDTH}/>
+        <div class={css!(
+                r#".column{
+                    display: inline-block;}
+        "#)}>
+            // <h3>{ card.name.clone() }</h3>
+            <img src={card.get_image_name()} alt="card" width={CARD_WIDTH} onclick={on_click}/>
         </div>
     }
 }
+
+

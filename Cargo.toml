@@ -13,3 +13,4 @@ strum = "0.24.1"
 strum_macros = "0.24.3"
 gloo-console = "0.2.3"
 wasm-bindgen = "0.2.84"
+stylist = {version = "0.12.0", features = ["yew_integration"]}

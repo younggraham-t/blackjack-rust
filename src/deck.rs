@@ -17,7 +17,9 @@ pub fn deck(DeckProps { cards, on_click }: &DeckProps) -> Html {
             })
         };
         html! {
-            <p key={card.id} onclick={on_card_select}>{format!("{} {}", card.value, card.suit)}</p>
+            
+            <CardDetails card={card.clone()} on_click={on_card_select} />
+            // <p key={card.id} onclick={on_card_select}>{format!("{} {}", card.value, card.suit)}</p>
         }
     }).collect()
 }
@@ -29,14 +31,6 @@ pub struct DeckProps {
 }
 
 impl DeckProps {
-    // pub fn new() -> Self {
-    //     let new_cards = Self::create_cards_vector();
-    //
-    //     Self { 
-    //        cards: new_cards,
-    //     }
-
-//  }
 
     pub fn create_cards_vector() -> Vec<Card> {
         

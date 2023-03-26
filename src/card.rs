@@ -5,7 +5,7 @@ use wasm_bindgen::JsValue;
 
 const CARD_WIDTH: &str = "100";
 
-pub mod card_utils;
+mod card_utils;
 pub use card_utils::*;
 
 
@@ -35,9 +35,9 @@ impl Card {
             Suit::Clubs    => "C".to_string(),
             Suit::Diamonds => "D".to_string(),
         };
-        let suit_js = JsValue::from(suit_abbr.clone());
-        let value_js = JsValue::from(suit_abbr.clone());
-        log!(suit_js, value_js);
+        // let suit_js = JsValue::from(suit_abbr.clone());
+        // let value_js = JsValue::from(suit_abbr.clone());
+        // log!(suit_js, value_js);
         format!("assets/cards/{}{}.png", value_abbr, suit_abbr)
     }
 }

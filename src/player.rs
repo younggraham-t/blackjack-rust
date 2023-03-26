@@ -1,24 +1,44 @@
 use crate::card::*;
 use std::fmt;
 use yew::prelude::*;
-
+use stylist::css;
+use stylist::yew::*;
 const BLACKJACK: i32 = 21;
 
-#[function_component(Player)]
-fn player(PlayerHand { held_cards } PLayerHand) -> Html {
+#[styled_component(Player)]
+pub fn player(PlayerHand { held_cards, on_click }: &PlayerHand) -> Html {
+    // let style_format = format!(".column {{float: left; width:{}%; padding: 5px;}}", 
+    //                            100/held_cards.len()
+    //                            );
+    // let style = use_style!(style_format);
+    let on_click = on_click.clone();
+        held_cards.iter().map(|card| {
+            let on_card_select = {
+                let on_click = on_click.clone();
+                let card = card.clone();
+                Callback::from(move |_| {
+                    on_click.emit(card.clone())
+                })
+            };
 
+
+            html! {
+
+                // <div id={"player_cards"}> 
+                    <CardDetails card={card.clone()} on_click={on_card_select} />
+                // </div>
+                // <p key={card.id} onclick={on_card_select}>{format!("{} {}", card.value, card.suit)}</p>
+            }
+        }).collect()
 }
 
+#[derive(Properties, PartialEq)]
 pub struct PlayerHand {
-    held_cards: Vec<Card>, 
+    pub held_cards: Vec<Card>,
+    pub on_click: Callback<Card>
 }
 
 impl PlayerHand {
-    pub fn new() -> Self {
-        Self {
-           held_cards: Vec::new(),
-        } 
-    }
 
     pub fn add_card_to_hand(&mut self, card: Card) {
         self.held_cards.push(card);
