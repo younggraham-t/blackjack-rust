@@ -1,8 +1,13 @@
 use crate::card::*;
 use std::fmt;
-
+use yew::prelude::*;
 
 const BLACKJACK: i32 = 21;
+
+#[function_component(Player)]
+fn player(PlayerHand { held_cards } PLayerHand) -> Html {
+
+}
 
 pub struct PlayerHand {
     held_cards: Vec<Card>, 

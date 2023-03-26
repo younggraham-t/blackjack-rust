@@ -17,8 +17,7 @@ fn app() -> Html {
     let on_card_select = {
         let selected_card = selected_card.clone();
         Callback::from(move |card: Card|{
-            let selected_card_name = JsValue::from(card.clone().name);
-            log!(selected_card_name);
+            log!(JsValue::from(card.clone().name));
             selected_card.set(Some(card))
         })
     };
