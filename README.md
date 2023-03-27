@@ -1,5 +1,5 @@
-# blackjack-rust
-a simple blackjack game written in Rust for my CSC3320 class
+# Blackjack Written in Rust
+a simple blackjack web app written in Rust for my CSC3320 class
 
 
 
