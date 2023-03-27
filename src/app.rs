@@ -5,22 +5,45 @@ use crate::card::*;
 use crate::deck::*;
 use crate::player::*;
 
-use gloo_console::log;
-use wasm_bindgen::JsValue;
-use stylist::yew::*;
+
+// use gloo_dialogs::alert;
+// use wasm_bindgen::JsValue;
+// use stylist::yew::*;
 const NUMBER_OF_INITIAL_CARDS: i32 = 2;
 pub enum Msg {
     Hit,
     Stand,
+    Restart,
 }
 
 pub struct App {
     deck: DeckProps,
     player: PlayerHand,
     dealer: PlayerHand,
+    standed: bool,
 }
 impl App {
-  fn deal_cards(&mut self) {
+
+    fn new() -> Self {
+        let deck = DeckProps::create_cards_vector();
+        let deck = DeckProps {
+            cards: deck,
+        };
+        let player = PlayerHand { held_cards: Vec::new() };
+        let dealer = PlayerHand { held_cards: Vec::new() };
+
+        let mut output = Self {
+            deck,
+            player,
+            dealer,
+            standed: false,
+        };
+        output.deal_cards();
+
+        output
+    }
+    
+    fn deal_cards(&mut self) {
         let player_hand = self.initialize_player_hand(NUMBER_OF_INITIAL_CARDS);
         for card in player_hand {
             self.player.add_card_to_hand(card);
@@ -73,31 +96,27 @@ impl Component for App {
     type Properties = ();
 
     fn create(_ctx: &Context<Self>) -> Self {
-        let deck = DeckProps::create_cards_vector();
-        let deck = DeckProps {
-            cards: deck,
-        };
-        let player = PlayerHand { held_cards: Vec::new() };
-        let dealer = PlayerHand { held_cards: Vec::new() };
-
-        let mut output = Self {
-            deck,
-            player,
-            dealer,
-        };
-        output.deal_cards();
-
-        output
+        Self::new()
     }
 
-    fn update(&mut self, ctx: &Context<Self>, msg: Self::Message) -> bool {
+    fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
             Msg::Hit => {
                 let _ = self.player_hit();
                 true
             }
             Msg::Stand => {
+                self.standed = true;
                 let _ = self.dealer_plays();
+                true
+            }
+            Msg::Restart => {
+                self.standed = false;
+                let new = Self::new();
+                self.deck = new.deck;
+                self.player = new.player;
+                self.dealer = new.dealer;
+
                 true
             }
 
@@ -122,13 +141,32 @@ impl Component for App {
                 <Player held_cards={self.player.held_cards.clone()}/>
 
                 <div class="buttons">
-                    <button class="button" onclick={ctx.link().callback(|_| Msg::Hit)}>
-                        { "Hit" }
-                    </button>
 
-                    <button class="button" onclick={ctx.link().callback(|_| Msg::Stand)}>
-                        { "Stand" }
+                if !&self.player.is_busted() {
+                    if self.dealer.is_busted() {
+                        <h1> { " You Win " } </h1>
+                        <button class="button" onclick={ctx.link().callback(|_| Msg::Restart)}>
+                            { "Restart" }
+                        </button>
+                    }
+                    else {
+                        if !&self.standed {
+                        <button class="button" onclick={ctx.link().callback(|_| Msg::Hit)}>
+                            { "Hit" }
+                        </button>
+                        <button class="button" onclick={ctx.link().callback(|_| Msg::Stand)}>
+                            { "Stand" }
+                        </button>
+                        }
+                    }
+                }
+                else {
+                    <h1> { " Dealer Wins " } </h1>
+                    <button class="button" onclick={ctx.link().callback(|_| Msg::Restart)}>
+                        { "Restart" }
                     </button>
+                }
+
                 </div>
             </>
         }

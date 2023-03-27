@@ -6,30 +6,24 @@ const BLACKJACK: i32 = 21;
 
 #[styled_component(Player)]
 pub fn player(PlayerHand { held_cards }: &PlayerHand) -> Html {
-    // let style_format = format!(".column {{float: left; width:{}%; padding: 5px;}}", 
-    //                            100/held_cards.len()
-    //                            );
-    // let style = use_style!(style_format);
-    // let on_click = on_click.clone();
-    held_cards.iter().map(|card| {
-        // let on_card_select = {
-        // let on_click = on_click.clone();
-        //     let card = card.clone();
-        //     Callback::from(move |_| {
-        //         on_click.emit(card.clone())
-        //     })
-        // };
-
-
-        html! {
-
-            // <div id={"player_cards"}> 
+    held_cards.iter()
+        .map(|card| {
+            html! {
                 <CardDetails card={card.clone()} />
-            // </div>
-            // <p key={card.id} onclick={on_card_select}>{format!("{} {}", card.value, card.suit)}</p>
-        }
+            }
     }).collect()
 }
+
+#[styled_component(Delaer)]
+pub fn dealer(PlayerHand { held_cards }: &PlayerHand) -> Html {
+    held_cards.iter()
+        .map(|card| { 
+            html! {
+                <CardDetails card={card.clone()} />
+            }
+    }).collect()
+}
+
 
 #[derive(Properties, PartialEq)]
 pub struct PlayerHand {
@@ -43,11 +37,11 @@ impl PlayerHand {
         self.held_cards.push(card);
     }
 
-    pub fn is_busted(&mut self) -> bool {
+    pub fn is_busted(&self) -> bool {
         self.get_hand_total() > BLACKJACK
     }
 
-    pub fn get_hand_total(&mut self) -> i32 {
+    pub fn get_hand_total(&self) -> i32 {
         let mut sum_of_hand: i32 = 0;
         let mut number_of_aces = 0;
         for card in &self.held_cards {

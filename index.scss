@@ -9,7 +9,7 @@ body {
   display: flex;
   // justify-content: center;
 
-  background: linear-gradient(to bottom right, #444444, #000a5b);
+  background: radial-gradient(ellipse at center, #FF370C, #87240F);
   font-size: 1rem;
 }
 
@@ -19,6 +19,12 @@ main {
   text-align: center;
 }
 
+
+
+// .buttons {
+//   display: flex;
+//   justify-content: center;
+// }
 
 #content h2 {
   padding: 10px;

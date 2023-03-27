@@ -412,6 +412,7 @@ version = "0.1.0"
 dependencies = [
  "getrandom",
  "gloo-console",
+ "gloo-dialogs",
  "rand",
  "strum",
  "strum_macros",
