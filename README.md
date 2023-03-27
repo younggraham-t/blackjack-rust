@@ -23,7 +23,7 @@ git clone https://github.com/younggraham-t/blackjack-rust.git
 ```
 trunk serve --open
 ```
-from the root directory of the project. This will start a local server on 127.0.0.1 and open it in your browser.
+from the root directory of the project. This will build the project, start a local server on 127.0.0.1 and open it in your browser.
 
 
 
