@@ -9,7 +9,8 @@ a simple blackjack game written in Rust for my CSC3320 class
 ```
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
-in the terminal or follow [https://www.rust-lang.org/tools/install](https://www.rust-lang.org/tools/install) and get the installer if you are on Windows.
+in the terminal or follow [https://www.rust-lang.org/tools/install](https://www.rust-lang.org/tools/install) and get the installer if you are on Windows.  
+
 2. Install Trunk using:
 ```
 cargo install --locked trunk
