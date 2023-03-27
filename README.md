@@ -1,5 +1,5 @@
 # Blackjack Written in Rust
-a simple blackjack web app written in Rust for my CSC3320 class
+a simple blackjack web app written in Rust using the Yew front-end framework for my CSC3320 class
 
 
 
