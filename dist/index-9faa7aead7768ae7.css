@@ -1,4 +1,3 @@
-@charset "UTF-8";
 html,
 body {
   height: 100%;
@@ -6,9 +5,7 @@ body {
 }
 
 body {
-  align-items: center;
   display: flex;
-  justify-content: center;
   background: linear-gradient(to bottom right, #444444, #000a5b);
   font-size: 1rem;
 }
@@ -19,16 +16,6 @@ main {
   text-align: center;
 }
 
-.logo {
-  height: 20em;
-}
-
-.heart:after {
-  content: "❤️";
-  font-size: 1.75em;
-}
-
-h1 + .subtitle {
-  display: block;
-  margin-top: -1em;
+#content h2 {
+  padding: 10px;
 }

@@ -3,27 +3,51 @@
 // use crate::card::*;
 // use std::io::stdin;
 // use std::collections::HashMap;
+// use yew::prelude::*;
+// use stylist::yew::*;
 //
 // const NUMBER_OF_INITIAL_CARDS: i32 = 2;
 // // const BLACKJACK: i32 = 21;
+// //
 //
-// pub struct Dealer {
-//     deck: DeckProps,
-//     player: PlayerHand,
-//     dealer: PlayerHand,
+// #[derive(Properties, PartialEq)]
+// struct ButtonProps {
+//     on_click: Callback
+//
+// }
+//
+// #[styled_component(Button)]
+// pub fn button()
+//
+// #[styled_component(Game)]
+// pub fn game(GameProps {deck, player, dealer}: &GameProps) -> Html {
+//     
+//     html!{
+//         
+//     }
+//
 // }
 //
 //
-// impl Dealer {
-//     pub fn new(deck: DeckProps) -> Self {
 //
-//         Self {
-//             deck,
-//             player: PlayerHand::new(),
-//             dealer: PlayerHand::new(),
-//         } 
-//         
+//
+// fn draw_card_to_hand(deck:&mut DeckProps, player_hand:&mut PlayerHand) {
+//         let drawn_card = deck.draw_card();
+//         println!("Card drawn: \t{}", drawn_card.name.as_str());
+//         player_hand.add_card_to_hand(drawn_card);
+//
 //     }
+//
+// #[derive(Properties, PartialEq)]
+// pub struct GameProps {
+//     deck: DeckProps,
+//     player: PlayerHand,
+//     dealer: PlayerHand,
+//     
+// }
+//
+//
+// impl GameProps {
 //
 //     fn deal_cards(&mut self) {
 //         let player_hand = self.initialize_player_hand(NUMBER_OF_INITIAL_CARDS);
@@ -40,11 +64,11 @@
 //     
 //     pub fn run(&mut self) {
 //         self.deal_cards();
-//         let mut user_options: HashMap<&str, fn(&mut Dealer) -> bool> = HashMap::new();
+//         let mut user_options: HashMap<&str, fn(&mut Self) -> bool> = HashMap::new();
 //         // type Binop = fn();
 //         // let dp: Binop = self.dealer_plays();
-//         user_options.insert("stand", Dealer::dealer_plays);
-//         user_options.insert("hit", Dealer::player_hit);
+//         user_options.insert("stand", Self::dealer_plays);
+//         user_options.insert("hit", Self::player_hit);
 //         
 //         let dealer_start_total = self.dealer.get_hand_total();
 //         println!("Delear hand: \t{}\nDealer total: \t{}", self.dealer, dealer_start_total);
@@ -89,16 +113,10 @@
 //
 //     }
 //
-//     fn draw_card_to_hand(deck:&mut DeckProps, player_hand:&mut PlayerHand) {
-//         let drawn_card = deck.draw_card();
-//         println!("Card drawn: \t{}", drawn_card.name.as_str());
-//         player_hand.add_card_to_hand(drawn_card);
-//
-//     }
-//
+//     
 //     fn player_hit(&mut self) -> bool { 
 //         // println!("player hit");
-//         Self::draw_card_to_hand(&mut self.deck, &mut self.player); 
+//         draw_card_to_hand(&mut self.deck, &mut self.player); 
 //         self.player.is_busted() 
 //     }
 //
@@ -109,9 +127,8 @@
 //             if self.dealer.get_hand_total() >= 17 {
 //                 return true;
 //             }
-//             Self::draw_card_to_hand(&mut self.deck, &mut self.dealer);
+//             draw_card_to_hand(&mut self.deck, &mut self.dealer);
 //         }
-//         // false
 //     }
 //
 //

@@ -45,18 +45,18 @@ impl fmt::Display for Suit {
 #[derive(Properties, PartialEq, Clone)]
 pub struct CardDetailsProps {
     pub card: Card,
-    pub on_click: Callback<MouseEvent>
+    // pub on_click: Callback<MouseEvent>
 }
 
 #[styled_component(CardDetails)]
-pub fn card_details(CardDetailsProps { card, on_click }: &CardDetailsProps) -> Html {
+pub fn card_details(CardDetailsProps { card }: &CardDetailsProps) -> Html {
     html! {
         <div class={css!(
                 r#".column{
                     display: inline-block;}
         "#)}>
             // <h3>{ card.name.clone() }</h3>
-            <img src={card.get_image_name()} alt="card" width={CARD_WIDTH} onclick={on_click}/>
+            <img src={card.get_image_name()} alt="card" width={CARD_WIDTH} />
         </div>
     }
 }

@@ -1,7 +1,5 @@
 use std::fmt;
 
-use gloo_console::log;
-use wasm_bindgen::JsValue;
 
 const CARD_WIDTH: &str = "100";
 
