@@ -1,10 +1,15 @@
+// use std::fmt::DebugList;
+
 use yew::prelude::*;
 
 use crate::card::*;
 // use crate::game::*;
 use crate::deck::*;
 use crate::player::*;
+// use crate::buttons::*;
 
+// const PLACE_HOLDER_CARD: &'static Card = & Card
+// { id: 0, value: Value::Ace, suit: Suit::Spades, name: String::new(), is_face_up: false };
 
 // use gloo_dialogs::alert;
 // use wasm_bindgen::JsValue;
@@ -21,6 +26,8 @@ pub struct App {
     player: PlayerHand,
     dealer: PlayerHand,
     standed: bool,
+    dealer_standed: bool,
+    // dealer_face_down_card: &'a Card,
 }
 impl App {
 
@@ -32,24 +39,32 @@ impl App {
         let player = PlayerHand { held_cards: Vec::new() };
         let dealer = PlayerHand { held_cards: Vec::new() };
 
-        let mut output = Self {
+                let mut output = Self {
             deck,
             player,
             dealer,
             standed: false,
+            dealer_standed: false,
+            // dealer_face_down_card: PLACE_HOLDER_CARD,
         };
         output.deal_cards();
 
         output
     }
-    
+
     fn deal_cards(&mut self) {
         let player_hand = self.initialize_player_hand(NUMBER_OF_INITIAL_CARDS);
         for card in player_hand {
             self.player.add_card_to_hand(card);
         }
 
-        let dealer_hand = self.initialize_player_hand(NUMBER_OF_INITIAL_CARDS);
+        let dealer_hand = self.initialize_player_hand(NUMBER_OF_INITIAL_CARDS -1);
+
+        let mut new_card: Card = self.deck.draw_card();
+        // let new_card_ref: &'a Card = &new_card;
+        // self.dealer_face_down_card = new_card_ref;
+        new_card.is_face_up = false;
+        self.dealer.add_card_to_hand(new_card);
         for card in dealer_hand {
             self.dealer.add_card_to_hand(card);
         }
@@ -63,6 +78,7 @@ impl App {
 
     }
 
+
     fn initialize_player_hand(&mut self, number_of_cards: i32) -> Vec<Card> {
         let mut output: Vec<Card> = Vec::new();
         for _ in 0..number_of_cards {
@@ -72,17 +88,23 @@ impl App {
         }
         output
     }
-    fn player_hit(&mut self) -> bool { 
+
+    fn player_hit(&mut self) -> bool {
         // println!("player hit");
-        Self::draw_card_to_hand(&mut self.deck, &mut self.player); 
-        self.player.is_busted() 
+        Self::draw_card_to_hand(&mut self.deck, &mut self.player);
+        if self.player.is_busted() {
+            self.dealer.face_up_all_cards();
+        }
+        self.player.is_busted()
     }
+
 
     fn dealer_plays(&mut self) -> bool {
         // dealer draws until he has a score of 17 or more
         loop {
             // println!("Dealer hand: \t{}", self.dealer.get_hand_total());
             if self.dealer.get_hand_total() >= 17 {
+                self.dealer.face_up_all_cards();
                 return true;
             }
             Self::draw_card_to_hand(&mut self.deck, &mut self.dealer);
@@ -107,7 +129,7 @@ impl Component for App {
             }
             Msg::Stand => {
                 self.standed = true;
-                let _ = self.dealer_plays();
+                self.dealer_standed = self.dealer_plays();
                 true
             }
             Msg::Restart => {
@@ -122,7 +144,7 @@ impl Component for App {
 
         }
 
-            
+
     }
 
     fn view(&self, ctx: &Context<Self>) -> Html {
@@ -145,24 +167,46 @@ impl Component for App {
                 if !&self.player.is_busted() {
                     if self.dealer.is_busted() {
                         <h1> { " You Win " } </h1>
-                        <button class="button" onclick={ctx.link().callback(|_| Msg::Restart)}>
+                        <button class="button" onclick={
+                            ctx.link().callback(|_| Msg::Restart)
+                        }>
                             { "Restart" }
                         </button>
                     }
                     else {
                         if !&self.standed {
-                        <button class="button" onclick={ctx.link().callback(|_| Msg::Hit)}>
+
+                        <button class="button" onclick={
+                            ctx.link().callback(|_| Msg::Hit)
+                        }>
                             { "Hit" }
                         </button>
-                        <button class="button" onclick={ctx.link().callback(|_| Msg::Stand)}>
+                        <button class="button" onclick={
+                            ctx.link().callback(|_| Msg::Stand)
+                        }>
                             { "Stand" }
                         </button>
+                        }
+                        else if self.dealer_standed {
+                            <button class="button" onclick={
+                                ctx.link().callback(|_| Msg::Restart)
+                            }>
+                                { "Restart" }
+                            </button>
+                            if self.player.get_hand_total() > self.dealer.get_hand_total() {
+                                <h1> { " You Win " } </h1>
+                            }
+                            else {
+                                <h1> { " Dealer Wins " } </h1>
+                            }
                         }
                     }
                 }
                 else {
                     <h1> { " Dealer Wins " } </h1>
-                    <button class="button" onclick={ctx.link().callback(|_| Msg::Restart)}>
+                    <button class="button" onclick={
+                        ctx.link().callback(|_| Msg::Restart)
+                    }>
                         { "Restart" }
                     </button>
                 }
@@ -176,6 +220,7 @@ impl Component for App {
 }
 
 pub fn render() {
-    
-    yew::Renderer::<App>::new().render();
+
+    let app: yew::Renderer::<App> = yew::Renderer::<App>::new();
+    app.render();
 }

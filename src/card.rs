@@ -1,3 +1,4 @@
+
 use std::fmt;
 
 
@@ -13,12 +14,13 @@ pub struct Card {
     pub value: Value,
     pub suit: Suit,
     pub name: String,
+    pub is_face_up: bool,
 }
 
 impl Card {
 
     pub fn get_image_name(&self) -> String {
-        
+
         let value_abbr = match self.value {
             Value::Jack  => "J".to_string(),
             Value::Queen => "Q".to_string(),
@@ -37,6 +39,10 @@ impl Card {
         // let value_js = JsValue::from(suit_abbr.clone());
         // log!(suit_js, value_js);
         format!("assets/cards/{}{}.png", value_abbr, suit_abbr)
+    }
+
+    pub fn set_face_up(&mut self) {
+        self.is_face_up = true
     }
 }
 

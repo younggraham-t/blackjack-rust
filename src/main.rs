@@ -4,7 +4,7 @@ mod card;
 mod game;
 mod player;
 mod app;
-
+mod buttons;
 
 
 // fn main() {

@@ -4,6 +4,13 @@ use yew::prelude::*;
 use crate::card::*;
 use stylist::css;
 use stylist::yew::*;
+use rand::Rng;
+
+const CARD_BACK_IMAGE_PATHS: [&str; 5] = ["/assets/cards/blue_back.png",
+      "/assets/cards/gray_back.png",
+      "/assets/cards/green_back.png",
+      "/assets/cards/purple_back.png",
+      "/assets/cards/yellow_back.png",];
 
 #[derive(Debug, EnumIter, Copy, Clone, PartialEq)]
 pub enum Value {
@@ -45,6 +52,7 @@ impl fmt::Display for Suit {
 #[derive(Properties, PartialEq, Clone)]
 pub struct CardDetailsProps {
     pub card: Card,
+    // pub is_face_up: bool,
     // pub on_click: Callback<MouseEvent>
 }
 
@@ -56,7 +64,12 @@ pub fn card_details(CardDetailsProps { card }: &CardDetailsProps) -> Html {
                     display: inline-block;}
         "#)}>
             // <h3>{ card.name.clone() }</h3>
-            <img src={card.get_image_name()} alt="card" width={CARD_WIDTH} />
+            if card.is_face_up {
+                <img src={card.get_image_name()} alt="card" width={CARD_WIDTH} />
+            }
+            else {
+                <img src={CARD_BACK_IMAGE_PATHS[rand::thread_rng().gen_range(0..5)]} alt="card" width={CARD_WIDTH} />
+            }
         </div>
     }
 }

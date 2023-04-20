@@ -14,15 +14,15 @@ pub fn player(PlayerHand { held_cards }: &PlayerHand) -> Html {
     }).collect()
 }
 
-#[styled_component(Delaer)]
-pub fn dealer(PlayerHand { held_cards }: &PlayerHand) -> Html {
-    held_cards.iter()
-        .map(|card| { 
-            html! {
-                <CardDetails card={card.clone()} />
-            }
-    }).collect()
-}
+// #[styled_component(Delaer)]
+// pub fn dealer(PlayerHand { held_cards }: &PlayerHand) -> Html {
+//     held_cards.iter()
+//         .map(|card| {
+//             html! {
+//                 <CardDetails card={card.clone()} />
+//             }
+//     }).collect()
+// }
 
 
 #[derive(Properties, PartialEq)]
@@ -48,7 +48,7 @@ impl PlayerHand {
             let card_value: Value = card.value;
             if card_value == Value::Ace {
                 number_of_aces += 1;
-            } 
+            }
             else {
                 sum_of_hand += card_value.get_numeric_value();
             }
@@ -64,6 +64,12 @@ impl PlayerHand {
             }
         }
         sum_of_hand
+    }
+
+    pub fn face_up_all_cards(&mut self)  {
+        for card in &mut self.held_cards {
+            card.set_face_up()
+        }
     }
 
 }

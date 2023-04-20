@@ -17,7 +17,7 @@ use yew::prelude::*;
 //             })
 //         };
 //         html! {
-//             
+//
 //             <CardDetails card={card.clone()} on_click={on_card_select} />
 //             // <p key={card.id} onclick={on_card_select}>{format!("{} {}", card.value, card.suit)}</p>
 //         }
@@ -33,7 +33,7 @@ pub struct DeckProps {
 impl DeckProps {
 
     pub fn create_cards_vector() -> Vec<Card> {
-        
+
 
         let mut cards: Vec<Card> = Vec::new();
         let mut card_id: u32 = 1;
@@ -43,7 +43,8 @@ impl DeckProps {
                     id: card_id,
                     value,
                     suit,
-                    name: format!("{} of {}", value, suit)});
+                    name: format!("{} of {}", value, suit),
+                    is_face_up: true});
                 card_id += 1;
             }
         }
@@ -58,6 +59,6 @@ impl DeckProps {
         }
         //take the card off the pile
         self.cards.pop().expect("yes")
-        
+
     }
 }
