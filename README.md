@@ -35,9 +35,7 @@ fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
 fn view(&self, ctx: &Context<Self>) -> Html {
 // Yew adds a macro that can be used to directly write html and yew components
 	html! {  
-		<div> 
-			...
-		</div> //this will compile directly to html code
+		<div> ... </div> //this will compile directly to html code
 
 		// The following doesn't work in html but it does work here because it is 
 		// part of Yew
