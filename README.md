@@ -41,7 +41,7 @@ fn view(&self, ctx: &Context<Self>) -> Html {
 		// part of Yew
 
 		// Player is a struct I wrote
-	    <Player held_cards={self.player.held_cards.clone()}/> 
+	    	<Player held_cards={self.player.held_cards.clone()}/> 
 
 		...
 	}
