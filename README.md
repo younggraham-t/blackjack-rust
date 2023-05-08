@@ -19,7 +19,6 @@ pub struct App {
     dealer: PlayerHand,
     standed: bool,
     dealer_standed: bool,
-    // dealer_face_down_card: &'a Card,
 }
 ```
 which implements a Trait (similar to an interface in Java) from Yew called Component
