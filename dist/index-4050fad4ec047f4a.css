@@ -6,6 +6,7 @@ body {
 
 body {
   display: flex;
+  justify-content: center;
   background: radial-gradient(ellipse at center, #FF370C, #87240F);
   font-size: 1rem;
 }
@@ -16,6 +17,10 @@ main {
   text-align: center;
 }
 
-#content h2 {
+.button {
+  display: flex;
+}
+
+h2 {
   padding: 10px;
 }

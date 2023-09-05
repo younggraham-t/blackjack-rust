@@ -1,7 +1,8 @@
 // use std::fmt::DebugList;
 
 use yew::prelude::*;
-
+use stylist::css;
+use stylist::yew::Global;
 use crate::card::*;
 // use crate::game::*;
 use crate::deck::*;
@@ -27,6 +28,7 @@ pub struct App {
     dealer: PlayerHand,
     standed: bool,
     dealer_standed: bool,
+    game_ended: bool,
     // dealer_face_down_card: &'a Card,
 }
 impl App {
@@ -45,6 +47,7 @@ impl App {
             dealer,
             standed: false,
             dealer_standed: false,
+            game_ended: false,
             // dealer_face_down_card: PLACE_HOLDER_CARD,
         };
         output.deal_cards();
@@ -105,6 +108,7 @@ impl App {
             // println!("Dealer hand: \t{}", self.dealer.get_hand_total());
             if self.dealer.get_hand_total() >= 17 {
                 self.dealer.face_up_all_cards();
+                self.game_ended = true;
                 return true;
             }
             Self::draw_card_to_hand(&mut self.deck, &mut self.dealer);
@@ -125,6 +129,9 @@ impl Component for App {
         match msg {
             Msg::Hit => {
                 let _ = self.player_hit();
+                if self.player.is_busted() {
+                    self.game_ended = true;
+                }
                 true
             }
             Msg::Stand => {
@@ -134,10 +141,12 @@ impl Component for App {
             }
             Msg::Restart => {
                 self.standed = false;
+                self.dealer_standed = false;
                 let new = Self::new();
                 self.deck = new.deck;
                 self.player = new.player;
                 self.dealer = new.dealer;
+                self.game_ended = false;
 
                 true
             }
@@ -150,51 +159,57 @@ impl Component for App {
     fn view(&self, ctx: &Context<Self>) -> Html {
          html! {
             <>
-                <div class="w3-container">
-                    <h2> {"Dealer Hand"} </h2>
+                <Global css={css!(r#"display:grid; 
+                grid-template-rows:auto auto auto;
+                margin: 10px;
+                "#)} />
+
+                <section class={css!("margin:10px;")}>
+                <h2> {"Dealer Hand"} </h2>
+                <div class={css!("display:flex;margin:10px;")}>
+                    <Player held_cards={self.dealer.held_cards.clone()}/>
                 </div>
 
-                <Player held_cards={self.dealer.held_cards.clone()}/>
 
-                <div class="w3-container">
-                    <h2> {"Player Hand"} </h2>
+                
+                <div class={css!("display:flex;margin:10px;")}>
+                    <Player held_cards={self.player.held_cards.clone()}/>
                 </div>
+                <h2> {"Player Hand"} </h2>
+                </section>
+                
 
-                <Player held_cards={self.player.held_cards.clone()}/>
+                <section class={css!("justify-content:right;")}>
 
-                <div class="buttons">
-
+                <button class="button" disabled={!self.game_ended} onclick={
+                    ctx.link().callback(|_| Msg::Restart)
+                }>
+                    { "Restart" }
+                </button>
+                <button class="button" disabled={self.game_ended} onclick={
+                    ctx.link().callback(|_| Msg::Hit)
+                }>
+                    { "Hit" }
+                </button>
+                <button class="button" disabled={self.standed || self.game_ended} onclick={
+                    ctx.link().callback(|_| Msg::Stand)
+                }>
+                    { "Stand" }
+                </button>
                 if !&self.player.is_busted() {
                     if self.dealer.is_busted() {
                         <h1> { " You Win " } </h1>
-                        <button class="button" onclick={
-                            ctx.link().callback(|_| Msg::Restart)
-                        }>
-                            { "Restart" }
-                        </button>
+
                     }
                     else {
-                        if !&self.standed {
-
-                        <button class="button" onclick={
-                            ctx.link().callback(|_| Msg::Hit)
-                        }>
-                            { "Hit" }
-                        </button>
-                        <button class="button" onclick={
-                            ctx.link().callback(|_| Msg::Stand)
-                        }>
-                            { "Stand" }
-                        </button>
-                        }
-                        else if self.dealer_standed {
-                            <button class="button" onclick={
-                                ctx.link().callback(|_| Msg::Restart)
-                            }>
-                                { "Restart" }
-                            </button>
+                        
+                        if self.dealer_standed {
+                            
                             if self.player.get_hand_total() > self.dealer.get_hand_total() {
                                 <h1> { " You Win " } </h1>
+                            }
+                            else if self.player.get_hand_total() == self.dealer.get_hand_total() {
+                                <h1> { " Push " } </h1>
                             }
                             else {
                                 <h1> { " Dealer Wins " } </h1>
@@ -204,14 +219,9 @@ impl Component for App {
                 }
                 else {
                     <h1> { " Dealer Wins " } </h1>
-                    <button class="button" onclick={
-                        ctx.link().callback(|_| Msg::Restart)
-                    }>
-                        { "Restart" }
-                    </button>
                 }
 
-                </div>
+                </section>
             </>
         }
 

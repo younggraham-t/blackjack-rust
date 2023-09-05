@@ -7,7 +7,7 @@ body {
 body {
   // align-items: center;
   display: flex;
-  // justify-content: center;
+  justify-content: center;
 
   background: radial-gradient(ellipse at center, #FF370C, #87240F);
   font-size: 1rem;
@@ -18,7 +18,10 @@ main {
   font-family: sans-serif;
   text-align: center;
 }
-
+.button {
+  display:flex;
+  
+}
 
 
 // .buttons {
@@ -26,6 +29,6 @@ main {
 //   justify-content: center;
 // }
 
-#content h2 {
+h2 {
   padding: 10px;
 }

@@ -60,15 +60,15 @@ pub struct CardDetailsProps {
 pub fn card_details(CardDetailsProps { card }: &CardDetailsProps) -> Html {
     html! {
         <div class={css!(
-                r#".column{
-                    display: inline-block;}
+            r#".column{
+                display: inline-block;}
         "#)}>
             // <h3>{ card.name.clone() }</h3>
             if card.is_face_up {
                 <img src={card.get_image_name()} alt="card" width={CARD_WIDTH} />
             }
             else {
-                <img src={CARD_BACK_IMAGE_PATHS[rand::thread_rng().gen_range(0..5)]} alt="card" width={CARD_WIDTH} />
+               <img src={CARD_BACK_IMAGE_PATHS[rand::thread_rng().gen_range(0..5)]} alt="card" width={CARD_WIDTH} />
             }
         </div>
     }
